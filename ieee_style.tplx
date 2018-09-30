@@ -1,0 +1,56 @@
+((= IPython input/output style =))
+
+((*- extends 'ieee_base.tplx' -*))
+
+% Custom definitions
+((* block definitions *))
+    ((( super() )))
+
+    % Pygments definitions
+    ((( resources.latex.pygments_definitions )))
+((* endblock definitions *))
+
+%===============================================================================
+% Input
+%===============================================================================
+
+((* block input scoped *))
+((*- if resources.global_content_filter.include_input_prompt *))
+\begin{Verbatim}[commandchars=\\\{\}]
+((( cell.source | highlight_code(strip_verbatim=True, metadata=cell.metadata) | add_prompts(first='>>> ', cont=" " * (4)) )))
+\end{Verbatim}
+((*- else *))
+    ((( cell.source | highlight_code(strip_verbatim=True, metadata=cell.metadata) )))
+((* endif *))
+((* endblock input *))
+
+
+%===============================================================================
+% Output
+%===============================================================================
+
+((* block execute_result scoped *))
+    ((*- for type in output.data | filter_data_type -*))
+        ((*- if type in ['text/plain'] *))
+\begin{Verbatim}[commandchars=\\\{\}]
+((( output.data['text/plain'] | escape_latex )))
+\end{Verbatim}
+        ((* else -*))
+((( super() )))
+        ((*- endif -*))
+    ((*- endfor -*))
+((* endblock execute_result *))
+
+
+%==============================================================================
+% Support Macros
+%==============================================================================
+
+% Name: draw_prompt
+% Purpose: Renders an output/input prompt
+((* macro add_prompt(text, cell, prompt) -*))
+    ((*- set indention =  " " * (4) -*))
+\begin{Verbatim}[commandchars=\\\{\}]
+((( text | add_prompts(first=prompt, cont=indention) )))
+\end{Verbatim}
+((*- endmacro *))
