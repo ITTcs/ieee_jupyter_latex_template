@@ -12,7 +12,7 @@
 %===============================================================================
 
 ((* block docclass *))
-\documentclass[12pt, conference, onecolumn]{IEEEtran}
+\documentclass[conference, onecolumn]{IEEEtran}
 ((* endblock docclass *))
 
 ((* block title *))
