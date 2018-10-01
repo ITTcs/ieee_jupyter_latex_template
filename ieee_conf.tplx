@@ -1,6 +1,6 @@
 % Default to the notebook output style
 ((* if not cell_style is defined *))
-    ((* set cell_style = 'ieee_style_ipython.tplx' *))
+    ((* set cell_style = 'ieee_style.tplx' *))
 ((* endif *))
 
 % Inherit from the specified cell style.
